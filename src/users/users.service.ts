@@ -16,10 +16,6 @@ export class UsersService {
     return await this.userRepository.save(newUser);
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
-
   findOne(user: any) {
     return this.userRepository.findOne({ where: { id: user.userId } });
   }
@@ -28,7 +24,7 @@ export class UsersService {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  remove(user: any) {
+    return this.userRepository.delete({ id: user.userId });
   }
 }

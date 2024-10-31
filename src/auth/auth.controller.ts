@@ -30,6 +30,6 @@ export class AuthController {
   status(@Req() reg: Request) {
     console.log('inside Auth controlller staus method');
     console.log(reg.user);
-    reg.user;
+    return reg.user;
   }
 }
