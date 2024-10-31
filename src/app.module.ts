@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { User } from './users/entities/user.entity';
+import { use } from 'passport';
 
 @Module({
   imports: [
@@ -16,7 +18,8 @@ import { AuthModule } from './auth/auth.module';
       username: 'postgres',
       password: 'Datait2024!',
       database: 'runDB',
-      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      //  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      entities: [User],
       synchronize: true, // Set to false in production
     }),
     UsersModule,

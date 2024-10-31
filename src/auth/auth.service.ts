@@ -1,38 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { AuthPayloadDto } from './dto/auth.dto';
 import { JwtService } from '@nestjs/jwt';
-
-const fakeUsers = [
-  {
-    id: 1,
-    username: 'john',
-    password: 'changeme',
-    role: 'admin',
-  },
-  {
-    id: 2,
-    username: 'maria',
-    password: 'guess',
-    role: 'user',
-  },
-];
+import { Repository } from 'typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AuthService {
   constructor(private jwtService: JwtService) {}
 
-  validateUser({ username, password }: AuthPayloadDto) {
-    const findUser = fakeUsers.find((user) => user.username === username);
+  @InjectRepository(User)
+  private readonly userRepository: Repository<User>;
 
+  async validateUser({ username, password }: AuthPayloadDto) {
+    const findUser = await this.userRepository.findOne({
+      where: { username, password },
+    });
     if (!findUser) {
       return null;
     }
-
-    if (password === findUser.password) {
-      // Exclude password from the user object using destructuring
-      const { password, ...user } = findUser;
-      // Return a signed JWT token with the user data
-      return this.jwtService.sign(user);
-    }
+    return this.jwtService.sign({
+      id: findUser.id,
+      username: findUser.username,
+    });
   }
 }
