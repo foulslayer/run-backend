@@ -26,9 +26,9 @@ export class UsersController {
 
   @Get()
   @UseGuards(JwtAuthGuard)
-  findOne(@Req() reg: Request) {
-    console.log(reg.user);
-    return this.usersService.findOne(reg.user);
+  findOne(@Req() req: Request) {
+    console.log(req.user);
+    return this.usersService.findOne(req.user);
   }
 
   @Patch(':id')

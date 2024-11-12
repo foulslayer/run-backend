@@ -6,8 +6,10 @@ import { UsersController } from './users/users.controller';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { User } from './users/entities/user.entity';
+import { Historik } from './historik/entities/historik.entity';
 import * as cors from 'cors';
 import { use } from 'passport';
+import { HistorikModule } from './historik/historik.module';
 
 @Module({
   imports: [
@@ -20,11 +22,12 @@ import { use } from 'passport';
       password: 'Datait2024!',
       database: 'runDB',
       //  entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      entities: [User],
+      entities: [User, Historik],
       synchronize: true, // Set to false in production
     }),
     UsersModule,
     AuthModule,
+    HistorikModule,
   ],
   controllers: [AppController, UsersController],
   providers: [AppService],
